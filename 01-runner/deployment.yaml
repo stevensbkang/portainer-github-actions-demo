@@ -50,3 +50,10 @@ spec:
           mountPath: /var/run/docker.sock
         - name: workdir
           mountPath: /tmp/runners
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "0.2"
+          limits:
+            memory: "128Mi"
+            cpu: "0.5"
