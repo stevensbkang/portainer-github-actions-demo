@@ -29,9 +29,9 @@ spec:
               fieldPath: metadata.name
         envFrom:
         - configMapRef:
-            name: runner-configmap
+            name: runners-configmap
         - secretRef:
-            name: runner-secret
+            name: runners-secret
         volumeMounts:
         - name: dockersock
           mountPath: /var/run/docker.sock
