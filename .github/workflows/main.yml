@@ -1,14 +1,57 @@
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+      PORTAINER_URL:
+        description: 'Portainer URL to interact with.'
+        required: true
+      ENDPOINT_ID:
+        description: 'Endpoint ID where the application will be deployed to the Portainer.'
+        required: true
+      APPLICATION_NAME:
+        description: 'Name of the application to be deployed to the Portainer.'
+        required: true
+      NAMESPACE:
+        description: 'Namespace where the application will reside in the Portainer.'
+        required: true
+      GIT_AUTHENTICATION:
+        description: 'Set to "true" if you want to use a private repository. Currently, it only supports public repositories.'
+        required: true
+        default: "false"
+      GIT_URL:
+        description: 'GitHub URL where the manifest is located (e.g. https://github.com/stevensbkang/portainer-github-actions-demo).'
+        required: true
+      GIT_REFERENCE:
+        description: 'Branch or tag of the repository where the manifest is located (e.g. master).'
+        required: true
+        default: "refs/heads/master"
+      MANIFEST_FILE:
+        description: 'Name of the manifest file, including its path (e.g. manifests/manifest.yml).'
+        required: true
+      INSECURE_TLS:
+        description: 'Set to "true" if you want to use an insecure TLS connection with self-signed certificate. This is not recommended.'
+        required: false
+        default: "false"
 
-name: 'Portainer CLI'
+name: 'Portainer GitHub Actions Demo'
 
 jobs:
   portainerctl_job:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     name: portainerctl
     steps:
-      - name: Print help
-        id: hello
-        uses: stevensbkang/portainer-github-actions@0.0.1
-        with:
-          command: 'help'
+    - name: Print help
+      uses: stevensbkang/portainer-github-actions@0.0.1
+      with:
+        command: |
+          application create \
+            --endpoint-id=${{ github.event.inputs.ENDPOINT_ID }} \
+            --name=${{ github.event.inputs.APPLICATION_NAME }} \
+            --namespace=${{ github.event.inputs.NAMESPACE }}
+            --git-authentication=${{ github.event.inputs.GIT_AUTHENTICATION }} \
+            --git-url=${{ github.event.inputs.GIT_URL }} \
+            --git-reference=${{ github.event.inputs.GIT_REFERENCE }} \
+            --manifest-file=${{ github.event.inputs.MANIFEST_FILE }} \
+            --insecure-tls=${{ github.event.inputs.INSECURE_TLS }}
+      env:
+        PORTAINER_URL: ${{ github.event.inputs.PORTAINER_URL }}
+        PORTAINER_API_KEY: ${{ secrets.PORTAINER_API_KEY }}
