@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: actions-runner
-  namespace: ga-runner
 spec:
   replicas: 1
   selector:
@@ -24,22 +23,10 @@ spec:
       - name: runner
         image: myoung34/github-runner:latest
         env:
-        # - name: RUNNER_SCOPE
-        #   value: repo
-        # - name: LABELS
-        #   value: portainer-demo
-        # - name: RUNNER_TOKEN
-        #   value: footoken
-        # - name: REPO_URL
-        #   value: https://github.com/stevensbkang/portainer-github-actions-demo
-        # - name: RUNNER_NAME_PREFIX
-        #   value: portainer
         - name: RUNNER_NAME
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        - name: RUNNER_WORKDIR
-          value: /tmp/runners
         envFrom:
         - configMapRef:
             name: runner-configmap
