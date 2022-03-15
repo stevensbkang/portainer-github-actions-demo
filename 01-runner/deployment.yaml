@@ -44,3 +44,7 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "0.5"
+        ## In order to access underlying Docker daemon, you need to set the following securityContext:
+        securityContext:
+          privileged: true
+          runAsUser: 0
