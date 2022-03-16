@@ -39,19 +39,18 @@ jobs:
     runs-on: self-hosted
     name: portainerctl
     steps:
-    - name: Print help
-      uses: stevensbkang/portainer-github-actions@0.0.1
-      with:
-        command: |
-          application create \
-            --endpoint-id=${{ github.event.inputs.ENDPOINT_ID }} \
-            --name=${{ github.event.inputs.APPLICATION_NAME }} \
-            --namespace=${{ github.event.inputs.NAMESPACE }}
-            --git-authentication=${{ github.event.inputs.GIT_AUTHENTICATION }} \
-            --git-url=${{ github.event.inputs.GIT_URL }} \
-            --git-reference=${{ github.event.inputs.GIT_REFERENCE }} \
-            --manifest-file=${{ github.event.inputs.MANIFEST_FILE }} \
-            --insecure-tls=${{ github.event.inputs.INSECURE_TLS }}
+    - name: "[Portainer] Deploy application to Portainer"
+      shell: bash
+      run: |
+        portainerctl application create \
+          --endpoint-id=${{ github.event.inputs.ENDPOINT_ID }} \
+          --name=${{ github.event.inputs.APPLICATION_NAME }} \
+          --namespace=${{ github.event.inputs.NAMESPACE }}
+          --git-authentication=${{ github.event.inputs.GIT_AUTHENTICATION }} \
+          --git-url=${{ github.event.inputs.GIT_URL }} \
+          --git-reference=${{ github.event.inputs.GIT_REFERENCE }} \
+          --manifest-file=${{ github.event.inputs.MANIFEST_FILE }} \
+          --insecure-tls=${{ github.event.inputs.INSECURE_TLS }}
       env:
         PORTAINER_URL: ${{ github.event.inputs.PORTAINER_URL }}
         PORTAINER_API_KEY: ${{ secrets.PORTAINER_API_KEY }}

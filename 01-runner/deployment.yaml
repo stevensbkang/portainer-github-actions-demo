@@ -21,7 +21,7 @@ spec:
           path: /tmp/runners
       containers:
       - name: runner
-        image: myoung34/github-runner:latest
+        image: ssbkang/github-runner:1.0.0
         env:
         - name: RUNNER_NAME
           valueFrom:
@@ -44,7 +44,3 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "0.5"
-        ## In order to access underlying Docker daemon, you need to set the following securityContext:
-        securityContext:
-          privileged: true
-          runAsUser: 0
