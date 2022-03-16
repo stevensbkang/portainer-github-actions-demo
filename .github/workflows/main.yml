@@ -45,7 +45,7 @@ jobs:
         portainerctl application create \
           --endpoint-id=${{ github.event.inputs.ENDPOINT_ID }} \
           --name=${{ github.event.inputs.APPLICATION_NAME }} \
-          --namespace=${{ github.event.inputs.NAMESPACE }}
+          --namespace=${{ github.event.inputs.NAMESPACE }} \
           --git-authentication=${{ github.event.inputs.GIT_AUTHENTICATION }} \
           --git-url=${{ github.event.inputs.GIT_URL }} \
           --git-reference=${{ github.event.inputs.GIT_REFERENCE }} \
